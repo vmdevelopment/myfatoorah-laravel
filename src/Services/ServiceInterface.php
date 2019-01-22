@@ -10,10 +10,11 @@ namespace VMdevelopment\MyFatoorah\Services;
 
 interface ServiceInterface
 {
-    public function setAccessToken($token);
+	public function setAccessToken ( $token );
 
-    /**
-     * @return \VMdevelopment\MyFatoorah\Request\AccessToken
-     */
-    public function getAccessToken();
+
+	/**
+	 * @return \VMdevelopment\MyFatoorah\Request\AccessToken
+	 */
+	public function getAccessToken ();
 }

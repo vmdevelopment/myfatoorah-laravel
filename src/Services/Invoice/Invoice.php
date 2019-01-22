@@ -7,60 +7,65 @@ use VMdevelopment\MyFatoorah\Traits\HasProducts;
 
 class Invoice extends ServiceAbstract implements InvoiceInterface
 {
-    use HasProducts;
+	use HasProducts;
 
-    /**
-     * @var string
-     */
-    protected $id;
-
-    /**
-     * Invoice constructor.
-     */
-    public function __construct()
-    {
-        $this->requestable = new CreateInvoiceIsoRequest();
-        $this->requestable->setHeaders([
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
-        ]);
-    }
-
-    /**
-     * @return array
-     */
-    public function populateRequestData()
-    {
-        $data = $this->mapParamsToArray();
-        $products = $this->mapProductsData();
+	/**
+	 * @var string
+	 */
+	protected $id;
 
 
-        if (count($products)){
-            $data['InvoiceValue'] = $this->calculateProductsValue();
-            $data['InvoiceItemsCreate'] = $products;
-        }
+	/**
+	 * Invoice constructor.
+	 */
+	public function __construct ()
+	{
+		$this->requestable = new CreateInvoiceIsoRequest();
+		$this->requestable->setHeaders(
+			[
+				'Accept'       => 'application/json',
+				'Content-Type' => 'application/json'
+			]
+		);
+	}
 
-        return $data;
-    }
 
-    /**
-     * @param int $id
-     */
-    public static function getById(int $id)
-    {
-        // TODO: Implement getById() method.
-    }
+	/**
+	 * @param int $id
+	 */
+	public static function getById ( int $id )
+	{
+		// TODO: Implement getById() method.
+	}
 
-    /**
-     * @return mixed
-     */
-    public function pay()
-    {
-        $token = $this->getAccessToken();
-        if (is_null($token) || $token->isExpired()) {
-            $authorize = 1;
-        }
 
-        return $this->requestable->send($this->populateRequestData());
-    }
+	/**
+	 * @return mixed
+	 */
+	public function pay ()
+	{
+		$token = $this->getAccessToken();
+		if ( is_null( $token ) || $token->isExpired() ) {
+			$authorize = 1;
+		}
+
+		return $this->requestable->send( $this->populateRequestData() );
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function populateRequestData ()
+	{
+		$data = $this->mapParamsToArray();
+		$products = $this->mapProductsData();
+
+		if ( count( $products ) ) {
+			$data['InvoiceValue'] = $this->calculateProductsValue();
+			$data['InvoiceItemsCreate'] = $products;
+		}
+
+		return $data;
+	}
 }
