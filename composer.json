@@ -1,0 +1,38 @@
+{
+    "name": "vmdevelopment/myfatoorah",
+    "description": "Myfathoorah REST API package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vanand Mkrtchyan",
+            "email": "vanand@vm-development.com",
+            "homepage": "http://www.vm-development.com/"
+        }
+    ],
+    "minimum-stability": "dev",
+
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.6.*|5.7.*|5.8.*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "VMdevelopment\\MyFatoorah\\": "src/"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "VMdevelopment\\MyFatoorah\\Tests\\": "tests/"
+        }
+    },
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "VMdevelopment\\MyFatoorah\\Providers\\MyFatoorahServiceProfider"
+            ]
+        }
+    }
+}
