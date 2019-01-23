@@ -1,32 +1,34 @@
 <?php
-
-namespace VMdevelopment\MyFatoorah\Request;
-
 /**
- * Class AccessToken
- *
- * @package VMdevelopment\MyFatoorah\Request
+ * Created by PhpStorm.
+ * User: Vanand Mkrtchyan
+ * Date: 23-Jan-19
+ * Time: 5:02 PM
  */
+
+namespace VMdevelopment\MyFatoorah\Support;
+
 class AccessToken
 {
 	/**
 	 * @var string
 	 */
 	protected $token;
+
 	/**
 	 * @var \DateTime
 	 */
 	protected $expires_at;
 
 
-	public function __construct ( array $data )
+	public function __construct( array $data )
 	{
 		$this->token = $data['access_token'];
 		$this->expires_at = new \DateTime( $data['.expires'] );
 	}
 
 
-	public function isExpired ()
+	public function isExpired()
 	{
 		return ( $this->expires_at < new \DateTime() );
 	}
@@ -35,7 +37,7 @@ class AccessToken
 	/**
 	 * @return mixed
 	 */
-	public function getToken ()
+	public function getToken()
 	{
 		return $this->token;
 	}
