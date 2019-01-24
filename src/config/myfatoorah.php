@@ -23,8 +23,6 @@ return [
 	| For example
 	|   "token" => [
 	|       "access_token" => "Your Token String",
-	|       "token_type" => "bearer",
-	|       ".issued" => "Mon, 21 Jan 2019 12:02:10 GMT",
 	|       ".expires" => "Tue, 21 Jan 2020 12:02:10 GMT",
     |   ]
     |
