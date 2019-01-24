@@ -22,7 +22,7 @@ class GuzzleClient implements HttpClient
 	function post( $url, array $params )
 	{
 		try {
-			return json_decode( $this->client->post( $url, $params )->getBody() );
+			return json_decode( $this->client->post( $url, $params )->getBody(), true );
 		}
 		catch ( ClientException $exception ) {
 			return json_decode( $exception->getResponse()->getBody() );
@@ -36,7 +36,7 @@ class GuzzleClient implements HttpClient
 	function get( $url, array $params )
 	{
 		try {
-			return json_decode( $this->client->get( $url, $params )->getBody() );
+			return json_decode( $this->client->get( $url, $params )->getBody(), true );
 		}
 		catch ( ClientException $exception ) {
 			return json_decode( $exception->getResponse()->getBody() );

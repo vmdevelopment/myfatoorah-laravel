@@ -2,9 +2,13 @@
 
 namespace VMdevelopment\MyFatoorah\Services;
 
+use VMdevelopment\MyFatoorah\Support\Response\Invoice;
+
 class ApiInvoice extends AbstractService
 {
 	protected $endpoint = "ApiInvoices/CreateInvoiceIso";
+
+	protected static $instance = null;
 
 	protected $requiresAccessToken = true;
 
@@ -14,18 +18,51 @@ class ApiInvoice extends AbstractService
 	public function __construct()
 	{
 		parent::__construct();
+		self::$instance = $this;
 	}
 
 
 	function make()
 	{
+		if ( $this->requestData->has( 'InvoiceId' ) && $this->requestData->get( 'InvoiceId' ) )
+			return $this->instance->findById( $this->requestData->get( 'InvoiceId' ) );
 
-		return $this->client->post(
+		return $this->create();
+	}
+
+
+	/**
+	 * @param $id
+	 *
+	 * @return \VMdevelopment\MyFatoorah\Support\Response\Invoice
+	 */
+	public static function findById( $id )
+	{
+		$invoice = self::$instance ?: new static();
+		$data = $invoice->client->get(
+			$invoice->getRequestUrl( "ApiInvoices/Transaction/" . $id ), [
+				"headers" => $invoice->headers->all(),
+				"json"    => $invoice->requestData->all(),
+			]
+		);
+
+		return Invoice::hydrate( $data );
+	}
+
+
+	/**
+	 * @return \VMdevelopment\MyFatoorah\Support\Response\Invoice
+	 */
+	protected function create()
+	{
+		$data = $this->client->post(
 			$this->getRequestUrl(), [
 				"headers" => $this->headers->all(),
 				"json"    => $this->requestData->all(),
 			]
 		);
+
+		return Invoice::hydrate( $data );
 	}
 
 
@@ -322,5 +359,11 @@ class ApiInvoice extends AbstractService
 	public function getErrorUrl()
 	{
 		return $this->requestData->get( "ErrorUrl" );
+	}
+
+
+	public function toArray()
+	{
+		return $this->requestData->all();
 	}
 }

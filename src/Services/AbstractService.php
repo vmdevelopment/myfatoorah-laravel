@@ -54,9 +54,11 @@ abstract class AbstractService implements Service
 	}
 
 
-	protected function getRequestUrl()
+	protected function getRequestUrl( $endpoint = null )
 	{
-		return $this->basePath . $this->endpoint;
+		$endpoint = $endpoint ?: $this->endpoint;
+
+		return $this->basePath . $endpoint;
 	}
 
 
