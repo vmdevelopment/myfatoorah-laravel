@@ -53,12 +53,111 @@ MYFATOORAH_PASSWORD=secret
 
 ## Usage example
 
-Requesting `AccessToken`
+### Requesting `AccessToken`
 ```php
 public function auth(  )
-	{
+{
+	try{
+	
 		$token = MyFatoorah::requestAccessToken();
-    $token->isExpired() // check if token is expired
-    $token->getToken()  // get token
+		
+	} catch( \Exception $exception ){
+		// your handling of request failure
 	}
+	$token->isExpired() // check if token is expired
+	$token->getToken()  // get token
+}
+```
+### Creating ApiInvoice(make payment)
+```php
+public function pay()
+{
+	try{
+
+		$payment = MyFatoorah::createApiInvoiceIso();
+
+		$payment->setCustomerName( "John Doe" );
+
+		$payment->setDisplayCurrencyIsoAlpha( "KWD" );
+
+		$payment->setCountryCodeId( 1 );
+
+		$payment->setCallBackUrl( "http://example.com/success" );
+
+		$payment->setErrorUrl( "http://example.com/error" );
+
+		$payment->addProduct( "test product", 10, 5 );
+
+		$payment->make();
+		
+	} catch( \Exception $exception ){
+		// your handling of request failure
+	}
+    
+    	$payment->isSuccess() // check if MyFatoorah has successfully handled request.
+}
+```
+### Find ApiInvoice `AccessToken`
+```php
+public function check( $id )
+{
+	try{
+	
+		 $invoice = MyFatoorah::findInvoice( $id );
+		 
+	 } catch( \Exception $exception ){
+		// your handling of request failure
+	}
+	$invoice->isPaid(); // check if invoice is paid
+	$invoice->isUnpaid(); // check if invoice is unpaid
+	$invoice->isFailed(); // check if invoice is failed
+}
+```
+Available functions for found invoices
+```
+getInvoiceId()
+getInvoiceReference()
+getCreatedDate()
+getExpireDate()
+getInvoiceValue()
+getComments()
+getCustomerName()
+getCustomerMobile()
+getCustomerEmail()
+getTransactionDate()
+getPaymentGateway()
+getReferenceId()
+getTrackId()
+getTransactionId()
+getPaymentId()
+getAuthorizationId()
+getOrderId()
+getInvoiceItems()
+getTransactionStatus()
+getError()
+getPaidCurrency()
+getPaidCurrencyValue()
+getTransationValue()
+getCustomerServiceCharge()
+getDueValue()
+getCurrency()
+getApiCustomFileds()
+getInvoiceDisplayValue()
+```
+ You are able also set access token in run-time
+```php
+public function check( $id )
+{
+	try{
+		MyFatoorah::setAccessToken([
+			"access_token" => "your token here",
+			".expires" => "Tue, 21 Jan 2020 12:02:10 GMT",
+		]);
+		
+		// your code goes here...
+		
+	 } catch( \Exception $exception ){
+		// your handling of request failure
+	}
+}
 ```
