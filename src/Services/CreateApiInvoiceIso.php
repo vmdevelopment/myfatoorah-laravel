@@ -2,70 +2,39 @@
 
 namespace VMdevelopment\MyFatoorah\Services;
 
-use VMdevelopment\MyFatoorah\Support\Response\Invoice;
+use VMdevelopment\MyFatoorah\Response\CreateApiInvoiceIso as Response;
 
-class ApiInvoice extends AbstractService
+class CreateApiInvoiceIso extends AbstractService
 {
 	protected $endpoint = "ApiInvoices/CreateInvoiceIso";
-
-	protected static $instance = null;
 
 	protected $requiresAccessToken = true;
 
 	private $products = [];
 
-
-	public function __construct()
-	{
-		parent::__construct();
-		self::$instance = $this;
-	}
-
-
 	function make()
 	{
-		if ( $this->requestData->has( 'InvoiceId' ) && $this->requestData->get( 'InvoiceId' ) )
-			return $this->instance->findById( $this->requestData->get( 'InvoiceId' ) );
-
-		return $this->create();
-	}
-
-
-	/**
-	 * @param $id
-	 *
-	 * @return \VMdevelopment\MyFatoorah\Support\Response\Invoice
-	 */
-	public static function findById( $id )
-	{
-		$invoice = self::$instance ?: new static();
-		$data = $invoice->client->get(
-			$invoice->getRequestUrl( "ApiInvoices/Transaction/" . $id ), [
-				"headers" => $invoice->headers->all(),
-				"json"    => $invoice->requestData->all(),
-			]
-		);
-
-		return Invoice::hydrate( $data );
-	}
-
-
-	/**
-	 * @return \VMdevelopment\MyFatoorah\Support\Response\Invoice
-	 */
-	protected function create()
-	{
-		$data = $this->client->post(
+		$resp = $this->client->post(
 			$this->getRequestUrl(), [
 				"headers" => $this->headers->all(),
 				"json"    => $this->requestData->all(),
 			]
-		);
+		)->getBody()->getContents();
 
-		return Invoice::hydrate( $data );
+		return new Response(
+			json_decode(
+				$resp,
+				true
+			)
+		);
 	}
 
 
+	/**
+	 * @param float $value
+	 *
+	 * @throws \Exception
+	 */
 	public function setInvoiceValue( $value )
 	{
 		if ( is_array( $this->products ) && count( $this->products ) )

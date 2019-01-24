@@ -2,6 +2,8 @@
 
 namespace VMdevelopment\MyFatoorah\Services;
 
+use VMdevelopment\MyFatoorah\Support\AccessToken;
+
 class Auth extends AbstractService
 {
 	protected $endpoint = "Token";
@@ -37,11 +39,18 @@ class Auth extends AbstractService
 
 	public function make()
 	{
-		return $this->client->post(
+		$resp = $this->client->post(
 			$this->getRequestUrl(), [
 				"headers"     => $this->headers->all(),
 				"form_params" => $this->requestData->all(),
 			]
+		)->getBody()->getContents();
+
+		return new AccessToken(
+			json_decode(
+				$resp,
+				true
+			)
 		);
 	}
 

@@ -2,10 +2,10 @@
 
 namespace VMdevelopment\MyFatoorah\Services;
 
+use GuzzleHttp\Client;
 use VMdevelopment\MyFatoorah\Contracts\Service;
 use VMdevelopment\MyFatoorah\Support\AccessToken;
 use VMdevelopment\MyFatoorah\Support\BasicData;
-use VMdevelopment\MyFatoorah\Support\HttpClient\GuzzleClient;
 
 /**
  * Class ServiceAbstract
@@ -44,7 +44,7 @@ abstract class AbstractService implements Service
 		if ( $this->requiresAccessToken )
 			$this->setAccessToken();
 
-		$this->client = new GuzzleClient();
+		$this->client = new Client();
 	}
 
 

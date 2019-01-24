@@ -1,6 +1,6 @@
 <?php
 
-namespace VMdevelopment\MyFatoorah\Providers;
+namespace VMdevelopment\MyFatoorah;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -20,11 +20,11 @@ class MyFatoorahServiceProfider extends ServiceProvider
 	{
 		$this->publishes(
 			[
-				__DIR__ . '/../config/myfatoorah.php' => config_path( 'myfatoorah.php' ),
+				__DIR__ . '/config/myfatoorah.php' => config_path( 'myfatoorah.php' ),
 			]
 		);
 		$this->mergeConfigFrom(
-			__DIR__ . '/../config/myfatoorah.php',
+			__DIR__ . '/config/myfatoorah.php',
 			'myfatoorah'
 		);
 	}
@@ -37,6 +37,10 @@ class MyFatoorahServiceProfider extends ServiceProvider
 	 */
 	public function register ()
 	{
-		//
+		$this->app->singleton(
+			'myfatoorah', function() {
+			return new Myfatoorah();
+		}
+		);
 	}
 }
