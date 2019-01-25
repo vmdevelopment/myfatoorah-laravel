@@ -45,6 +45,19 @@ class CreateApiInvoiceIso
 	}
 
 
+	/**
+	 * @param $code
+	 *
+	 * @return array|null
+	 */
+	public function getPaymentMethodByCode( $code )
+	{
+		$index = array_search( $code, array_column( $this->getPaymentMethods(), 'PaymentMethodCode' ) );
+
+		return $index === false ? null : $this->getPaymentMethods()[ $index ];
+	}
+
+
 	public function getApiCustomFileds()
 	{
 		return $this->data->get( 'ApiCustomFileds' );
