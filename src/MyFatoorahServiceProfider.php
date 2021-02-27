@@ -5,11 +5,11 @@ namespace VMdevelopment\MyFatoorah;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class MyFatoorahServiceProfider
+ * Class MyFatoorahServiceProvider
  *
  * @package VMdevelopment\MyFatoorah\Providers
  */
-class MyFatoorahServiceProfider extends ServiceProvider
+class MyFatoorahServiceProvider extends ServiceProvider
 {
 	/**
 	 * Bootstrap MyFatoorah application services.
