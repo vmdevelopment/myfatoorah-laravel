@@ -19,7 +19,7 @@ composer require "vmdevelopment/myfatoorah-laravel"
 Now open up `/config/app.php` and add the service provider to your `providers` array.
 ```php
 'providers' => [
-	VMdevelopment\MyFatoorah\MyFatoorahServiceProfider::class,
+	VMdevelopment\MyFatoorah\MyFatoorahServiceProvider::class,
 ]
 ```
 
@@ -33,7 +33,7 @@ Now add the alias.
 ## Configuration
 To publish config run
 ```
-php artisan vendor:publish --provider="VMdevelopment\MyFatoorah\MyFatoorahServiceProfider"
+php artisan vendor:publish --provider="VMdevelopment\MyFatoorah\MyFatoorahServiceProvider"
 ```
 and modify the config file with your own information. File is located in `/config/myfatoorah.php`
 
