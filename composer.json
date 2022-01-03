@@ -9,7 +9,7 @@
             "homepage": "http://www.vm-development.com/"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
 
     "require": {
         "php": "^7.1",
